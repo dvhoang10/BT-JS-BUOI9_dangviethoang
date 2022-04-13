@@ -59,11 +59,11 @@ const Validator = {
       inputSelector,
       test: () => {
         let regex =
-          /^([a-vxyỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêâđ]+)((\s{1}[a-vxyỳọáầảấờễàạằệếýộậốũứĩõúữịỗìềểẩớặòùồợãụủíỹắẫựỉỏừỷởóéửỵẳẹèẽổẵẻỡơôưăêâđ]+){1,})$/;
+          /[^a-z0-9A-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễếệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]/u;
 
-        if (!regex.test(value.toLowerCase())) {
+        if (!regex.test(value)) {
           document.querySelector(errorSelector).innerText =
-            "Vui lòng chỉ nhập tên là chữ";
+            "Vui lòng chỉ nhập tên là chữ và có ít nhất 2 từ";
           document.querySelector(errorSelector).style.display = "block";
           return false;
         }

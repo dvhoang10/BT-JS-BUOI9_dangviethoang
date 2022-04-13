@@ -92,7 +92,6 @@ const validate = (staff, danhSachStaff) => {
 
 const addStaff = () => {
   const newStaff = getInfoFromForm();
-  console.log(newStaff.chucVu);
 
   let isValid = validate(newStaff, danhSachStaff);
 
@@ -100,6 +99,7 @@ const addStaff = () => {
     danhSachStaff.push(newStaff);
     setStaffLocal(danhSachStaff);
 
+    document.querySelector("#btnDong").click();
     document.querySelector("#formStaff").reset();
   }
 };
@@ -174,3 +174,27 @@ const searchStaff = (e) => {
 };
 
 document.querySelector("#searchName").addEventListener("input", searchStaff);
+
+const clearNotifies = (notifies) => {
+  [...notifies].forEach((notify) => {
+    notify.innertext = "";
+    notify.style.display = "none";
+  });
+};
+
+document.querySelector("#btnDong").addEventListener("click", () => {
+  let notifies = document.querySelectorAll(".sp-thongbao");
+  clearNotifies(notifies);
+});
+
+document.addEventListener("click", (e) => {
+  let modal = document.querySelector("#myModal");
+
+  if (
+    document.body.classList.contains("modal-open") &&
+    !modal.contains(e.target)
+  ) {
+    let notifies = document.querySelectorAll(".sp-thongbao");
+    clearNotifies(notifies);
+  }
+});
