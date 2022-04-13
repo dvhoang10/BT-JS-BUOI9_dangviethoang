@@ -6,7 +6,7 @@ if (json) {
   renderStaffList(danhSachStaff);
 }
 
-const validate = (staff, danhSachStaff) => {
+const validate = (staff, checkFindDuplicate, danhSachStaff) => {
   let rules = [
     Validator.isRequired(
       staff.taiKhoan,
@@ -15,7 +15,6 @@ const validate = (staff, danhSachStaff) => {
       "Vui lòng nhập tài khoản"
     ),
     Validator.checkUser(staff.taiKhoan, "#tknv", "#tbTKNV"),
-    // Validator.findDuplicate(staff.taiKhoan, danhSachStaff, "#tknv", "#tbTKNV"),
     Validator.isRequired(
       staff.hoTen,
       "#name",
@@ -67,6 +66,12 @@ const validate = (staff, danhSachStaff) => {
     Validator.checkWorkHours(staff.gioLam, "#gioLam", "#tbGiolam", 80, 200),
   ];
 
+  if (checkFindDuplicate) {
+    rules.push(
+      Validator.findDuplicate(staff.taiKhoan, danhSachStaff, "#tknv", "#tbTKNV")
+    );
+  }
+
   let isValid = true;
   let selectorRules = {};
 
@@ -93,7 +98,7 @@ const validate = (staff, danhSachStaff) => {
 const addStaff = () => {
   const newStaff = getInfoFromForm();
 
-  let isValid = validate(newStaff, danhSachStaff);
+  let isValid = validate(newStaff, true, danhSachStaff);
 
   if (isValid) {
     danhSachStaff.push(newStaff);
@@ -140,10 +145,9 @@ const updateStaffInfo = () => {
   if (index !== -1) {
     staff = getInfoFromForm();
 
-    let isValid = validate(staff, danhSachStaff);
+    let isValid = validate(staff, false, danhSachStaff);
 
     if (isValid) {
-      // let { taiKhoan, ...tmpStaff } = staff;
       danhSachStaff[index] = staff;
       setStaffLocal(danhSachStaff);
       document.querySelector("#btnDong").click();
